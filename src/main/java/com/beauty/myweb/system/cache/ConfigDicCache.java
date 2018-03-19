@@ -35,6 +35,7 @@ public class ConfigDicCache {
             });
 
     public static List<ConfigDic> getConfigDics(String code){
+
         if(StringUtils.isBlank(code)){
             return new ArrayList<>();
         }
