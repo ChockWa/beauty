@@ -21,6 +21,13 @@ public interface ConfigDicMapper extends BaseMapper<ConfigDic> {
      * @param code
      * @return
      */
-    List<ConfigDic> getByCode(@Param("code") String code);
+    ConfigDic getByCode(@Param("code") String code);
+
+    /**
+     * 根据类型获取字典列表
+     * @param type
+     * @return
+     */
+    List<ConfigDic> getByType(String type);
 
 }

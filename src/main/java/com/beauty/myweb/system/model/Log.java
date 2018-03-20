@@ -2,13 +2,19 @@ package com.beauty.myweb.system.model;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author 
+ */
 @TableName("sys_log")
-public class Log {
+public class Log implements Serializable {
+    private Integer id;
 
-    private int id;
-
+    /**
+     * 发生时间
+     */
     private Date logTime;
 
     private String logType;
@@ -21,13 +27,18 @@ public class Log {
 
     private String logUrl;
 
+    /**
+     * 操作状态
+     */
     private String logStatus;
 
-    public int getId() {
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

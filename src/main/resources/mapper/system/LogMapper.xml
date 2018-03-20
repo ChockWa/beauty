@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauty.myweb.system.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.beauty.myweb.system.model.Log">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="log_time" jdbcType="TIMESTAMP" property="logTime" />
+    <result column="log_type" jdbcType="VARCHAR" property="logType" />
+    <result column="log_dec" jdbcType="VARCHAR" property="logDec" />
+    <result column="log_user" jdbcType="VARCHAR" property="logUser" />
+    <result column="log_ip_address" jdbcType="VARCHAR" property="logIpAddress" />
+    <result column="log_url" jdbcType="VARCHAR" property="logUrl" />
+    <result column="log_status" jdbcType="VARCHAR" property="logStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, log_time, log_type, log_dec, log_user, log_ip_address, log_url, log_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.beauty.myweb.system.model.Log">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_log (log_time, log_type, log_dec,
+      log_user, log_ip_address, log_url, 
+      log_status)
+    values (#{logTime,jdbcType=TIMESTAMP}, #{logType,jdbcType=VARCHAR}, #{logDec,jdbcType=VARCHAR}, 
+      #{logUser,jdbcType=VARCHAR}, #{logIpAddress,jdbcType=VARCHAR}, #{logUrl,jdbcType=VARCHAR}, 
+      #{logStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.beauty.myweb.system.model.Log">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logTime != null">
+        log_time,
+      </if>
+      <if test="logType != null">
+        log_type,
+      </if>
+      <if test="logDec != null">
+        log_dec,
+      </if>
+      <if test="logUser != null">
+        log_user,
+      </if>
+      <if test="logIpAddress != null">
+        log_ip_address,
+      </if>
+      <if test="logUrl != null">
+        log_url,
+      </if>
+      <if test="logStatus != null">
+        log_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logTime != null">
+        #{logTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logType != null">
+        #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="logDec != null">
+        #{logDec,jdbcType=VARCHAR},
+      </if>
+      <if test="logUser != null">
+        #{logUser,jdbcType=VARCHAR},
+      </if>
+      <if test="logIpAddress != null">
+        #{logIpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="logUrl != null">
+        #{logUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="logStatus != null">
+        #{logStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.beauty.myweb.system.model.Log">
+    update sys_log
+    <set>
+      <if test="logTime != null">
+        log_time = #{logTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logType != null">
+        log_type = #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="logDec != null">
+        log_dec = #{logDec,jdbcType=VARCHAR},
+      </if>
+      <if test="logUser != null">
+        log_user = #{logUser,jdbcType=VARCHAR},
+      </if>
+      <if test="logIpAddress != null">
+        log_ip_address = #{logIpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="logUrl != null">
+        log_url = #{logUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="logStatus != null">
+        log_status = #{logStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.beauty.myweb.system.model.Log">
+    update sys_log
+    set log_time = #{logTime,jdbcType=TIMESTAMP},
+      log_type = #{logType,jdbcType=VARCHAR},
+      log_dec = #{logDec,jdbcType=VARCHAR},
+      log_user = #{logUser,jdbcType=VARCHAR},
+      log_ip_address = #{logIpAddress,jdbcType=VARCHAR},
+      log_url = #{logUrl,jdbcType=VARCHAR},
+      log_status = #{logStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

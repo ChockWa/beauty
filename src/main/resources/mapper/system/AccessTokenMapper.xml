@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauty.myweb.system.mapper.AccessTokenMapper">
+  <resultMap id="BaseResultMap" type="com.beauty.myweb.system.model.AccessToken">
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="access_token" property="accessToken" />
+    <result column="session_key" property="sessionKey" />
+    <result column="expire_time" property="expireTime" />
+    <result column="renew_time" property="renewTime" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, user_id, access_token, session_key, expire_time, renew_time, create_time
+  </sql>
+
+    <select id="getByAccessToken" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_access_token
+        where access_token = #{accessToken}
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from sys_access_token
+        where user_id = #{userId}
+    </delete>
+
+    <select id="getUserByAccessToken" resultType="com.beauty.myweb.user.model.User">
+        select
+        b.id, b.email, b.password, b.sex, b.salt, b.register_code registerCode, b.invite_code inviteCode,
+        b.invite_by inviteBy, b.mobile, b.user_name userName,
+        b.point, b.status, b.create_time createTime
+        from sys_access_token a
+        inner join sys_user b on a.user_id = b.id
+    </select>
+
+</mapper>

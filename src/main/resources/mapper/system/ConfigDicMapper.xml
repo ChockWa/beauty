@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauty.myweb.system.mapper.ConfigDicMapper">
+    <resultMap id="BaseResultMap" type="com.beauty.myweb.system.model.ConfigDic">
+        <id column="id" property="id" />
+        <result column="dic_name" property="dicName" />
+        <result column="dic_type" property="dicType" />
+        <result column="dic_code" property="dicCode" />
+        <result column="dic_label" property="dicLabel" />
+        <result column="dic_value" property="dicValue" />
+        <result column="remark" property="remark" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, dic_name, dic_type, dic_code, dic_label, dic_value, remark, status
+    </sql>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict
+        where status = 1
+    </select>
+
+    <select id="getByCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict
+        where status = 1
+        and dic_code = #{code}
+    </select>
+
+    <select id="getByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict
+        where status = 1
+        and dic_type = #{type}
+    </select>
+
+</mapper>

@@ -1,6 +1,7 @@
 package com.beauty.myweb.system.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.beauty.myweb.user.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.beauty.myweb.system.model.AccessToken;
@@ -12,5 +13,5 @@ public interface AccessTokenMapper extends BaseMapper<AccessToken> {
 
     int deleteByUserId(String userId);
 
-//    User getUserByAccessToken(@Param("accessToken") String accessToken);
+    User getUserByAccessToken(@Param("accessToken") String accessToken);
 }

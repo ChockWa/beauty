@@ -28,22 +28,27 @@ public class ConfigDicService {
      * @param code
      * @return
      */
-    public List<ConfigDic> getDicsByCode(String code){
-        if(StringUtils.isBlank(code)){
-            return new ArrayList<>();
-        }
-
-        List<ConfigDic> list = configDicMapper.getByCode(code);
-        return list;
-    }
-
     public ConfigDic getDicByCode(String code){
         if(StringUtils.isBlank(code)){
             return null;
         }
 
-        List<ConfigDic> list = configDicMapper.getByCode(code);
-        return list != null && list.size() == 1 ? list.get(0) : null;
+        ConfigDic configDic = configDicMapper.getByCode(code);
+        return configDic;
+    }
+
+    /**
+     * 根据类型获取字典列表
+     * @param type
+     * @return
+     */
+    public List<ConfigDic> getDicByType(String type){
+        if(StringUtils.isBlank(type)){
+            return new ArrayList<>();
+        }
+
+        List<ConfigDic> list = configDicMapper.getByType(type);
+        return list;
     }
 
     /**

@@ -22,48 +22,77 @@ public class ConfigDicCache {
 
     private static final Logger logger = LoggerFactory.getLogger(ConfigDicCache.class);
 
+    /**
+     * 初始化列表类型的字典
+     */
     private static LoadingCache<String,List<ConfigDic>> listConfigItemCache = CacheBuilder
             .newBuilder()
             .maximumSize(1024)
             .expireAfterWrite(1,TimeUnit.DAYS)
             .build(new CacheLoader<String, List<ConfigDic>>() {
                 @Override
-                public List<ConfigDic> load(String code) throws Exception {
+                public List<ConfigDic> load(String type) throws Exception {
                     ConfigDicService configDicService = SpringUtil.getBean(ConfigDicService.class);
-                    return configDicService.getDicsByCode(code);
+                    return configDicService.getDicByType(type);
                 }
             });
 
-    public static List<ConfigDic> getConfigDics(String code){
+    /**
+     * 初始化单个的字典
+     */
+    private static LoadingCache<String,ConfigDic> configItemCache = CacheBuilder
+            .newBuilder()
+            .maximumSize(1024)
+            .expireAfterWrite(1,TimeUnit.DAYS)
+            .build(new CacheLoader<String, ConfigDic>() {
+                @Override
+                public ConfigDic load(String code) throws Exception {
+                    ConfigDicService configDicService = SpringUtil.getBean(ConfigDicService.class);
+                    return configDicService.getDicByCode(code);
+                }
+            });
 
-        if(StringUtils.isBlank(code)){
+    /**
+     * 获取列表类型的字典
+     * @param type
+     * @return
+     */
+    public static List<ConfigDic> getConfigDics(String type){
+
+        if(StringUtils.isBlank(type)){
             return new ArrayList<>();
         }
         try {
-            return listConfigItemCache.get(code);
+            return listConfigItemCache.get(type);
         } catch (ExecutionException e) {
-            logger.error("获取字典列表失败,code:{}",code,e);
+            logger.error("获取字典列表失败,type:{}",type,e);
         }
         return null;
     }
 
+    /**
+     * 获取单个类型的字典
+     * @param code
+     * @return
+     */
     public static ConfigDic getConfigDic(String code){
         if(StringUtils.isBlank(code)){
             return null;
         }
 
         try {
-            List<ConfigDic> list = listConfigItemCache.get(code);
-            if(list != null && list.size() == 1){
-                return list.get(0);
-            }
+            return configItemCache.get(code);
         } catch (ExecutionException e) {
-            logger.error("获取字典列表失败,code:{}",code,e);
+            logger.error("获取字典失败,code:{}",code,e);
         }
         return null;
     }
 
-    public static void clearListDictCache(String code) {
-        listConfigItemCache.invalidate(code);
+    public static void clearListDictCache(String type) {
+        listConfigItemCache.invalidate(type);
+    }
+
+    public static void clearDictCache(String code) {
+        configItemCache.invalidate(code);
     }
 }

@@ -14,13 +14,13 @@ public class DictUtils {
 
     /**
      * 根据字典类型获取字典列表
-     * @param code
+     * @param type
      * @return
      */
-    public static List<ConfigDic> getDicList(String code){
-        if (StringUtils.isBlank(code)) return new ArrayList<>();
+    public static List<ConfigDic> getDicList(String type){
+        if (StringUtils.isBlank(type)) return new ArrayList<>();
 
-        return ConfigDicCache.getConfigDics(code);
+        return ConfigDicCache.getConfigDics(type);
     }
 
     /**
